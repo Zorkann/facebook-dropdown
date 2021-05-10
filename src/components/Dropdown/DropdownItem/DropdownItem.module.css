@@ -1,0 +1,23 @@
+.menuItem {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-radius: var(--border-radius);
+  transition: background var(--speed);
+  margin: 0 1rem;
+  padding: 0.2rem 0;
+  cursor: pointer;
+}
+
+.menuItem:hover {
+  background-color: #525357;
+}
+
+.menuItem > span {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.iconRight {
+  margin-left: auto;
+}

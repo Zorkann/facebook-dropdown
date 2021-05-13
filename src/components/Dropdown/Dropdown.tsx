@@ -4,7 +4,7 @@ import DropdownItem from "./DropdownItem";
 import DropdownMenu from "./DropdownMenu";
 
 type State = {
-  menuHeight?: number;
+  menuHeight: number;
   activeMenu: string;
 };
 type Dispatch = (action: Action) => void;

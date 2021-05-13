@@ -1,6 +1,6 @@
 import { CSSTransition } from "react-transition-group";
 import styles from "./DropdownMenu.module.css";
-import { FC } from "react";
+import { FC, useRef } from "react";
 import { useDropdown } from "../hooks/useDropdown";
 
 type DropdownMenuProps = {
@@ -10,20 +10,32 @@ type DropdownMenuProps = {
 
 const Menu: FC<DropdownMenuProps> = ({ children, id, menuType }) => {
   const { activeMenu, setMenuHeight } = useDropdown();
+  const menuRef = useRef<HTMLDivElement>(null);
+  const className = "menu_" + menuType;
+
+  const calcMenuHeight = () => {
+    if (menuRef.current) {
+      setMenuHeight(menuRef.current);
+    }
+  };
+
   return (
     <CSSTransition
       in={activeMenu === id}
       timeout={500}
+      nodeRef={menuRef}
       classNames={{
-        enter: styles["menu_" + menuType + "_Enter"],
-        enterActive: styles["menu_" + menuType + "_EnterActive"],
-        exit: styles["menu_" + menuType + "_Exit"],
-        exitActive: styles["menu_" + menuType + "_ExitActive"],
+        enter: styles[className + "_Enter"],
+        enterActive: styles[className + "_EnterActive"],
+        exit: styles[className + "_Exit"],
+        exitActive: styles[className + "_ExitActive"],
       }}
       unmountOnExit
-      onEnter={setMenuHeight}
+      onEnter={calcMenuHeight}
     >
-      <div className={styles.menu}>{children}</div>
+      <div ref={menuRef} className={styles.menu}>
+        {children}
+      </div>
     </CSSTransition>
   );
 };

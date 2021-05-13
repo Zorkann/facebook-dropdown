@@ -4,7 +4,7 @@ import { DropdownContext } from "../Dropdown";
 export const useDropdown = () => {
   const context = useContext(DropdownContext);
   if (context === undefined) {
-    throw new Error("useCount must be used within a CountProvider");
+    throw new Error("useDropdown must be used within a Dropdown component");
   }
   const {
     state: { activeMenu },

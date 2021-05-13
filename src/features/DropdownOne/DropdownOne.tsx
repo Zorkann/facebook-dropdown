@@ -1,26 +1,15 @@
 import Dropdown from "../../components/Dropdown";
 import { Cast, ChevronRight, Box, ChevronLeft } from "react-feather";
-import { useDropdown } from "../../hooks/useDropdown";
 
-const DropdownX = () => {
-  const { menuHeight, activeMenu, setMenuHeight, handleOnClick } = useDropdown({
-    activeMenu: "main",
-    menuHeight: 0,
-  });
-
+const DropdownOne = () => {
   return (
-    <Dropdown menuHeight={menuHeight} setMenuHeight={setMenuHeight}>
-      <Dropdown.Menu
-        isMenuActive={activeMenu === "main"}
-        classNames="menu-primary"
-        setMenuHeight={setMenuHeight}
-      >
+    <Dropdown activeMenu="main">
+      <Dropdown.Menu id="main" menuType="primary">
         <Dropdown.Item>My Profile</Dropdown.Item>
         <Dropdown.Item
           leftIcon={<Cast />}
           rightIcon={<ChevronRight />}
           goToMenu="settings"
-          handleOnClick={handleOnClick}
         >
           Settings
         </Dropdown.Item>
@@ -28,22 +17,13 @@ const DropdownX = () => {
           leftIcon="🦧"
           rightIcon={<ChevronRight />}
           goToMenu="animals"
-          handleOnClick={handleOnClick}
         >
           Animals
         </Dropdown.Item>
       </Dropdown.Menu>
 
-      <Dropdown.Menu
-        isMenuActive={activeMenu === "settings"}
-        classNames="menu-secondary"
-        setMenuHeight={setMenuHeight}
-      >
-        <Dropdown.Item
-          goToMenu="main"
-          leftIcon={<ChevronLeft />}
-          handleOnClick={handleOnClick}
-        >
+      <Dropdown.Menu id="settings" menuType="secondary">
+        <Dropdown.Item goToMenu="main" leftIcon={<ChevronLeft />}>
           <h2>My Tutorial</h2>
         </Dropdown.Item>
         <Dropdown.Item leftIcon={<Box />}>HTML</Dropdown.Item>
@@ -52,16 +32,8 @@ const DropdownX = () => {
         <Dropdown.Item leftIcon={<Box />}>Awesome!</Dropdown.Item>
       </Dropdown.Menu>
 
-      <Dropdown.Menu
-        isMenuActive={activeMenu === "animals"}
-        classNames="menu-secondary"
-        setMenuHeight={setMenuHeight}
-      >
-        <Dropdown.Item
-          goToMenu="main"
-          leftIcon={<ChevronLeft />}
-          handleOnClick={handleOnClick}
-        >
+      <Dropdown.Menu id="animals" menuType="secondary">
+        <Dropdown.Item goToMenu="main" leftIcon={<ChevronLeft />}>
           <h2>Animals</h2>
         </Dropdown.Item>
         <Dropdown.Item leftIcon="🦘">Kangaroo</Dropdown.Item>
@@ -73,4 +45,4 @@ const DropdownX = () => {
   );
 };
 
-export default DropdownX;
+export default DropdownOne;

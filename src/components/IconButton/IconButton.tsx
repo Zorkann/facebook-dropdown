@@ -2,7 +2,7 @@ import { FC } from "react";
 import styles from "./IconButton.module.css";
 
 type IconButtonProps = {
-  onClick?: () => void;
+  onClick?: (...args: any) => void;
 };
 
 const IconButton: FC<IconButtonProps> = ({ children: Icon, onClick }) => {

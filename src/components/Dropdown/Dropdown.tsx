@@ -1,11 +1,34 @@
-import { useEffect, useRef, FC } from "react";
+import { useRef, FC, createContext, useReducer, useLayoutEffect } from "react";
 import styles from "./Dropdown.module.css";
 import DropdownItem from "./DropdownItem";
 import DropdownMenu from "./DropdownMenu";
 
-type DropdownProps = {
+type State = {
   menuHeight?: number;
-  setMenuHeight: ({ offsetHeight }: { offsetHeight: number }) => void;
+  activeMenu: string;
+};
+type Dispatch = (action: Action) => void;
+
+type Action =
+  | { type: "SET_MENU_HEIGHT"; payload: number }
+  | { type: "SET_ACTIVE_MENU"; payload: string };
+
+function reducer(state: State, action: Action) {
+  switch (action.type) {
+    case "SET_MENU_HEIGHT": {
+      return { ...state, menuHeight: action.payload };
+    }
+    case "SET_ACTIVE_MENU": {
+      return { ...state, activeMenu: action.payload };
+    }
+    default: {
+      throw new Error(`Unhandled action type`);
+    }
+  }
+}
+
+type DropdownProps = {
+  activeMenu: string;
 };
 
 type SubComponents = {
@@ -13,32 +36,43 @@ type SubComponents = {
   Menu: typeof DropdownMenu;
 };
 
+const DropdownContext =
+  createContext<{ state: State; dispatch: Dispatch } | undefined>(undefined);
+
 const Dropdown: FC<DropdownProps> & SubComponents = ({
   children,
-  menuHeight = undefined,
-  setMenuHeight,
+  activeMenu,
 }) => {
+  const [state, dispatch] = useReducer(reducer, {
+    menuHeight: 0,
+    activeMenu,
+  });
+  const value = { state, dispatch };
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (dropdownRef.current) {
-      const { offsetHeight } = dropdownRef.current.firstChild as HTMLDivElement;
-      setMenuHeight({ offsetHeight });
+  useLayoutEffect(() => {
+    const child = dropdownRef.current?.firstChild as HTMLDivElement | undefined;
+    if (child) {
+      const { offsetHeight } = child;
+      dispatch({ type: "SET_MENU_HEIGHT", payload: offsetHeight });
     }
-  }, [setMenuHeight]);
+  }, []);
 
   return (
-    <div
-      className={styles.dropdown}
-      style={{ height: menuHeight }}
-      ref={dropdownRef}
-    >
-      {children}
-    </div>
+    <DropdownContext.Provider value={value}>
+      <div
+        className={styles.dropdown}
+        style={{ height: state.menuHeight }}
+        ref={dropdownRef}
+      >
+        {children}
+      </div>
+    </DropdownContext.Provider>
   );
 };
 
 Dropdown.Item = DropdownItem;
 Dropdown.Menu = DropdownMenu;
 
+export { DropdownContext };
 export default Dropdown;

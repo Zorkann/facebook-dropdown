@@ -1,13 +1,12 @@
 import { FC, ReactNode } from "react";
 import styles from "./DropdownItem.module.css";
 import IconButton from "../../IconButton";
-import { ActiveMenuType } from "../DropdownMenu";
+import { useDropdown } from "../hooks/useDropdown";
 
 type DropdownItemProps = {
-  goToMenu?: ActiveMenuType;
+  goToMenu?: string;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
-  handleOnClick?: (goToMenu: ActiveMenuType) => void;
 };
 
 const DropdownItem: FC<DropdownItemProps> = ({
@@ -15,10 +14,11 @@ const DropdownItem: FC<DropdownItemProps> = ({
   leftIcon,
   rightIcon,
   goToMenu,
-  handleOnClick,
 }) => {
+  const { handleOnClick } = useDropdown();
+
   const onItemClick = () => {
-    if (goToMenu && handleOnClick) {
+    if (goToMenu) {
       handleOnClick(goToMenu);
     }
   };

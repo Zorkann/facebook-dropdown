@@ -1,3 +1,4 @@
-import Dropdown from "./Dropdown";
+import Dropdown, { DropdownContext } from "./Dropdown";
 
+export { DropdownContext };
 export default Dropdown;

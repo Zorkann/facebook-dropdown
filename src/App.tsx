@@ -1,17 +1,19 @@
 import "./index.css";
 import { Bell, Battery, Cpu, ChevronDown } from "react-feather";
 import Navbar from "./components/Navbar";
-import DropdownX from "./features/Dropdown";
+import DropdownOne from "./features/DropdownOne";
+import DropdownTwo from "./features/DropdownTwo";
 
 function App() {
   return (
     <Navbar>
       <Navbar.Item icon={<Battery />} />
       <Navbar.Item icon={<Bell />} />
-      <Navbar.Item icon={<Cpu />} />
-
+      <Navbar.Item icon={<Cpu />}>
+        <DropdownTwo />
+      </Navbar.Item>
       <Navbar.Item icon={<ChevronDown />}>
-        <DropdownX />
+        <DropdownOne />
       </Navbar.Item>
     </Navbar>
   );

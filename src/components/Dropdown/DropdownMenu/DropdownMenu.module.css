@@ -1,0 +1,36 @@
+.menu {
+  position: absolute;
+  width: 100%;
+}
+
+:root {
+  --translateBy: 110%;
+}
+
+/* CSSTransition classes */
+
+.menu_primary_Enter {
+  transform: translateX(-110%);
+}
+.menu_primary_EnterActive {
+  transform: translateX(0%);
+  transition: all var(--speed) ease;
+}
+
+.menu_primary_ExitActive {
+  transform: translateX(-110%);
+  transition: all var(--speed) ease;
+}
+
+.menu_secondary_Enter {
+  transform: translateX(110%);
+}
+.menu_secondary_EnterActive {
+  transform: translateX(0%);
+  transition: all var(--speed) ease;
+}
+
+.menu_secondary_ExitActive {
+  transform: translateX(110%);
+  transition: all var(--speed) ease;
+}
